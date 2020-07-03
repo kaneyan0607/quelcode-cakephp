@@ -1,0 +1,27 @@
+nav.titlebar {
+	background: dodgerblue;
+}
+.titlebar-name {
+	width:50%;
+}
+h1 {
+	font-size:1.5rem;
+}
+h2 {
+	margin-bottom: 1.5rem;
+}
+h3 {
+	margin-bottom: 1.0rem;
+}
+table {
+	width:100%;
+}
+table tr th.main {
+	width:50%;
+}
+table tr th.small {
+	width:25%;
+}
+nav.sidebar {
+	background:#f6f6ff;
+}
