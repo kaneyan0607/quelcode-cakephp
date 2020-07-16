@@ -91,19 +91,19 @@ class AuctionController extends AuctionBaseController
         // POST送信時の処理
         if ($this->request->is('post')) {
             $biditem_data = $this->request->getData();
-            $file = $this->request->getData('image'); //画像情報受け取り
-            $info = pathinfo($file['name'], PATHINFO_EXTENSION); //アップロードしたファイルの拡張子を取得
+            $image = $this->request->getData('image'); //画像情報受け取り
+            $extension = pathinfo($image['name'], PATHINFO_EXTENSION); //アップロードしたファイルの拡張子を取得
             $check_array = ['jpg', 'gif', 'png'];             //アップロードを許可するファイルの拡張子を代入
-            $result = array_search($info, $check_array); //検索対象の配列$check_arrayに存在するか確認
+            $extension_permission = array_search($extension, $check_array); //検索対象の配列$check_arrayに存在するか確認
 
             //アップロードされたファイルが画像ファイルかどうかチェック
-            if ($result === false) {
+            if ($extension_permission === false) {
                 $this->Flash->error(__('「jpg」「gif」「png」のいずれかの画像ファイルでアップロードしてください。'));
             } else {
 
-                $file_path = '../webroot/img/biditem_img/' . date("YmdHis") . $file['name'];
-                move_uploaded_file($file['tmp_name'], $file_path); //ファイル名の先頭に時間をくっつけて/webroot/img/bid_itemに移動
-                $biditem_data['image_path'] = date("YmdHis") . $file['name'];
+                $image_path_name = '../webroot/img/biditem_img/' . date("YmdHis") . $image['name'];
+                move_uploaded_file($image['tmp_name'], $image_path_name); //ファイル名の先頭に時間をくっつけて/webroot/img/bid_itemに移動
+                $biditem_data['image_path'] = 'biditem_img/' . date("YmdHis") . $image['name'];
 
 
                 // $biditemにフォームの送信内容を反映

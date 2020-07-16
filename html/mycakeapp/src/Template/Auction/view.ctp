@@ -10,7 +10,7 @@
 		</tr>
 		<tr>
 			<th scope="row">商品画像</th>
-			<td><?= $this->Html->image('biditem_img/' . $biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
+			<td><?= $this->Html->image($biditem->image_path, array('height' => 100, 'width' => 100)) ?></td>
 		</tr>
 		<tr>
 			<th scope="row">詳細情報</th>
@@ -60,12 +60,8 @@
 
 								//HTML上に出力
 								document.getElementById("countOutput").innerHTML = (daysBetween - 1) + "日と" + _h + "時間" + m + "分" + s + "秒";
-
-								if ((h == 0) && (m == 0) && (s == 0)) {
-									clearInterval(timer);
-									document.getElementById("countOutput").innerHTML = "オークション終了";
-								}
 							} else {
+								clearInterval();
 								document.getElementById("countOutput").innerHTML = "オークション終了";
 							}
 						},
