@@ -66,7 +66,7 @@
 									document.getElementById("countOutput").innerHTML = "オークション終了";
 								}
 							} else {
-								document.getElementById("countOutput").innerHTML = "日付のフォーマット違う。";
+								document.getElementById("countOutput").innerHTML = "オークション終了";
 							}
 						},
 						1000);
