@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<?= $this->Html->charset() ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,11 +16,12 @@
 	<?= $this->fetch('css') ?>
 	<?= $this->fetch('script') ?>
 </head>
+
 <body>
 	<nav class="top-bar titlebar" data-topbar role="navigation">
 		<ul class="title-area large-3 medium-4 columns name">
 			<li>
-				<h1><?=$this->Html->link(__('Auction! [' . $authuser['username'] . ']'), ['action' => 'index']) ?></h1>
+				<h1><?= $this->Html->link(__('Auction! [' . $authuser['username'] . ']'), ['action' => 'index']) ?></h1>
 			</li>
 		</ul>
 		<div class="top-bar-section">
@@ -46,4 +48,5 @@
 	<footer>
 	</footer>
 </body>
+
 </html>
