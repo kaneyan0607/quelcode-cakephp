@@ -251,7 +251,7 @@ class AuctionController extends AuctionBaseController
                 // 成功時のメッセージ
                 $this->Flash->success(__('発送連絡しました。'));
                 // トップページ（index）に移動
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'home2']);
             } else {
                 // 失敗時のメッセージ
                 $this->Flash->error(__('発送連絡に失敗しました。もう一度入力下さい。'));
