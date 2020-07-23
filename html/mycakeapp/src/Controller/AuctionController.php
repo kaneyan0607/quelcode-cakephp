@@ -209,7 +209,7 @@ class AuctionController extends AuctionBaseController
     //落札者の取引後終了後ページ
     public function shippingBuyer($bidinfo_id = null)
     {
-        // Biditemインスタンスを用意
+
         $bidinfo = $this->Bidinfo->get($bidinfo_id, [
             'contain' => ['Biditems', 'Users', 'Biditems.Users']
         ]);
@@ -221,13 +221,13 @@ class AuctionController extends AuctionBaseController
             // $bidinfoを保存する
             if ($this->Bidinfo->save($bidinfo)) {
                 // 成功時のメッセージ
-                $this->Flash->success(__('保存しました。'));
-                // トップページ（index）に移動
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('出品者に連絡しました。'));
+                // トップページ（home）に移動
+                return $this->redirect(['action' => 'home']);
             } else {
                 // 失敗時のメッセージ
-                $this->Flash->error(__('保存に失敗しました。もう一度入力下さい。'));
-                var_dump($data);
+                $this->Flash->error(__('出品者に連絡できませんでした。もう一度入力下さい。'));
+                //var_dump($bidinfo);
             }
         }
 
@@ -236,7 +236,30 @@ class AuctionController extends AuctionBaseController
     }
 
     //出品者の取引終了後ページ
-    public function shippingExhibitor()
+    public function shippingExhibitor($bidinfo_id = null)
     {
+        $bidinfo = $this->Bidinfo->get($bidinfo_id, [
+            'contain' => ['Biditems', 'Users', 'Biditems.Users']
+        ]);
+        // POST送信時の処理
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            // $bidinfoにフォームの送信内容を反映
+            $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $data);
+            // $bidinfoを保存する
+            if ($this->Bidinfo->save($bidinfo)) {
+                // 成功時のメッセージ
+                $this->Flash->success(__('発送連絡しました。'));
+                // トップページ（index）に移動
+                return $this->redirect(['action' => 'index']);
+            } else {
+                // 失敗時のメッセージ
+                $this->Flash->error(__('発送連絡に失敗しました。もう一度入力下さい。'));
+                //var_dump($bidinfo);
+            }
+        }
+
+        //値を保管
+        $this->set(compact(['bidinfo']));
     }
 }

@@ -74,17 +74,17 @@ class BidinfoTable extends Table
             ->notEmptyString('price');
 
         $validator
-            ->integer('name')
+            ->maxLength('name', 100)
             ->requirePresence('name', 'create')
             ->notEmptyString('name');
 
         $validator
-            ->integer('address')
+            ->maxLength('address', 255)
             ->requirePresence('address', 'create')
             ->notEmptyString('address');
 
         $validator
-            ->integer('phone_number')
+            ->maxLength('phone_number', 11)
             ->requirePresence('phone_number', 'create')
             ->notEmptyString('phone_number');
 
