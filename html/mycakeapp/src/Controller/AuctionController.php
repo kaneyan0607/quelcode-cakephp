@@ -23,6 +23,7 @@ class AuctionController extends AuctionBaseController
         $this->loadModel('Bidrequests');
         $this->loadModel('Bidinfo');
         $this->loadModel('Bidmessages');
+        $this->loadModel('Evaluation');
         // ログインしているユーザー情報をauthuserに設定
         $this->set('authuser', $this->Auth->user());
         // レイアウトをauctionに変更
@@ -211,7 +212,7 @@ class AuctionController extends AuctionBaseController
     {
 
         $bidinfo = $this->Bidinfo->get($bidinfo_id, [
-            'contain' => ['Biditems', 'Users', 'Biditems.Users']
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
         ]);
         // POST送信時の処理
         if ($this->request->is('post')) {
@@ -223,7 +224,7 @@ class AuctionController extends AuctionBaseController
                 // 成功時のメッセージ
                 $this->Flash->success(__('出品者に連絡しました。'));
                 // トップページ（home）に移動
-                return $this->redirect(['action' => 'home']);
+                //return $this->redirect(['action' => 'home']);
             } else {
                 // 失敗時のメッセージ
                 $this->Flash->error(__('出品者に連絡できませんでした。もう一度入力下さい。'));
@@ -239,7 +240,7 @@ class AuctionController extends AuctionBaseController
     public function shippingExhibitor($bidinfo_id = null)
     {
         $bidinfo = $this->Bidinfo->get($bidinfo_id, [
-            'contain' => ['Biditems', 'Users', 'Biditems.Users']
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
         ]);
         // POST送信時の処理
         if ($this->request->is('post')) {
@@ -251,7 +252,7 @@ class AuctionController extends AuctionBaseController
                 // 成功時のメッセージ
                 $this->Flash->success(__('発送連絡しました。'));
                 // トップページ（index）に移動
-                return $this->redirect(['action' => 'home2']);
+                //return $this->redirect(['action' => 'home2']);
             } else {
                 // 失敗時のメッセージ
                 $this->Flash->error(__('発送連絡に失敗しました。もう一度入力下さい。'));
@@ -261,5 +262,69 @@ class AuctionController extends AuctionBaseController
 
         //値を保管
         $this->set(compact(['bidinfo']));
+    }
+
+    //落札者の取引評価
+    public function evaluationBuyer($bidinfo_id = null)
+    {
+        // 取引評価のevaluationインスタンスを用意
+        $evaluation = $this->Evaluation->newEntity();
+        $bidinfo = $this->Bidinfo->get($bidinfo_id, [
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
+        ]);
+        // POST送信時の処理
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            // $evaluationにフォームの送信内容を反映
+            $evaluation = $this->Evaluation->patchEntity($evaluation, $data);
+            //var_dump($evaluation);
+            // $evaluationを保存する
+            if ($this->Evaluation->save($evaluation)) {
+                // 成功時のメッセージ
+                $this->Flash->success(__('出品者を評価しました。'));
+                // トップページ（index）に移動
+                return $this->redirect(['action' => 'home']);
+                //var_dump($evaluation);
+            } else {
+                // 失敗時のメッセージ
+                $this->Flash->error(__('コメントと5段階評価を入力下さい。'));
+                //var_dump($evaluation);
+            }
+        }
+
+        //値を保管
+        $this->set(compact(['evaluation', 'bidinfo']));
+    }
+
+    //出品者の取引評価
+    public function evaluationExhibitor($bidinfo_id = NULL)
+    {
+        // 取引評価のevaluationインスタンスを用意
+        $evaluation = $this->Evaluation->newEntity();
+        $bidinfo = $this->Bidinfo->get($bidinfo_id, [
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
+        ]);
+        // POST送信時の処理
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            // $evaluationにフォームの送信内容を反映
+            $evaluation = $this->Evaluation->patchEntity($evaluation, $data);
+            //var_dump($evaluation);
+            // $evaluationを保存する
+            if ($this->Evaluation->save($evaluation)) {
+                // 成功時のメッセージ
+                $this->Flash->success(__('落札者を評価しました。'));
+                // トップページ（index）に移動
+                return $this->redirect(['action' => 'home2']);
+                //var_dump($evaluation);
+            } else {
+                // 失敗時のメッセージ
+                $this->Flash->error(__('コメントと5段階評価を入力下さい。'));
+                //var_dump($evaluation);
+            }
+        }
+
+        //値を保管
+        $this->set(compact(['evaluation', 'bidinfo']));
     }
 }

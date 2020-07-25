@@ -1,51 +1,13 @@
 <h2><?= $authuser['username'] ?> 受取住所連絡画面</h2>
 <h3>商品「<?= $bidinfo->biditem->name ?>」</h3>
 <?= $this->Form->create('Bidinfo', ['type' => 'file']) ?>
-<fieldset>
-        <legend>連絡先（名前、住所、電話番号）NULL判定:</legend>
-        <?php
-        $name = $bidinfo->name;
-        $address = $bidinfo->address;
-        $phone_number = $bidinfo->phone_number;
-
-        if ((is_null($name)) && (is_null($address)) && (is_null($phone_number))) {
-                echo 'NULLです。';
-        } else {
-                echo 'NULLではありません。';
-        }
-
-        ?>
-</fieldset>
-
-<fieldset>
-        <legend>受取連絡判定:</legend>
-        <?php
-        $is_received = $bidinfo->is_received;
-
-        if (empty($is_received)) {
-                echo '落札者が商品を受取りしていません。';
-        } else {
-                echo '落札者が商品を受取。';
-        }
-
-        ?>
-</fieldset>
-
-<fieldset>
-        <legend>発送連絡判定:</legend>
-        <?php
-        $is_shipped = $bidinfo->is_shipped;
-
-        if (empty($is_shipped)) {
-                echo '未発送です。';
-        } else {
-                echo '出品者が商品を発送。';
-        }
-
-        ?>
-</fieldset>
-
-<!--   ↑ここまでif文メモ   -->
+<?php
+$name = $bidinfo->name;
+$address = $bidinfo->address;
+$phone_number = $bidinfo->phone_number;
+$is_received = $bidinfo->is_received;
+$is_shipped = $bidinfo->is_shipped;
+?>
 
 <!-- 連絡先の値が入っていなければ -->
 <?php if ((is_null($name)) && (is_null($address)) && (is_null($phone_number))) { ?>
@@ -53,7 +15,7 @@
         <fieldset>
                 <legend>発送先情報を入力：</legend>
                 <?php
-                echo '<p><strong>USER: ' . $authuser['username'] . '</strong></p>';
+                echo '<p>出品者のアカウント名 : ' . $bidinfo->biditem->user->username . '<p>';
                 echo $this->Form->control('name');
                 echo $this->Form->control('address');
                 echo $this->Form->control('phone_number');
@@ -91,8 +53,16 @@
 
         <fieldset>
                 <legend>取引状況：</legend>
-                <p>受取完了</p>
-                <p>出品者を評価してください。</p>
+                <?php if (empty($bidinfo['evaluation'][0]->bidinfo_id)) { ?>
+                        <p>取引が終了しました。出品者を評価して下さい。</p>
+                        <?= $this->Html->link(__($bidinfo->biditem->user->username . 'さんを評価する。'), ['action' => 'evaluation_buyer', $bidinfo->id]) ?>
+                <?php } elseif ($bidinfo['evaluation'][0]->evaluation_user_id === $authuser['id']) { ?>
+                        <p>商品受取済。（取引終了）</p>
+                        <p>評価済みです。</p>
+                <?php } else { ?>
+                        <p>取引が終了しました。出品者を評価して下さい。</p>
+                        <?= $this->Html->link(__($bidinfo->biditem->user->username . 'さんを評価する。'), ['action' => 'evaluation_buyer', $bidinfo->id]) ?>
+                <?php } ?>
         </fieldset>
 
 <?php } ?>

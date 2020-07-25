@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,7 +11,7 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Bidrequest[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class BidrequestsController extends AppController
+class BidrequestsController extends AuctionBaseController
 {
     /**
      * Index method
