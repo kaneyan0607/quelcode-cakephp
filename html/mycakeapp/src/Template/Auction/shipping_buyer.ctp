@@ -1,6 +1,6 @@
-<h2><?= $authuser['username'] ?> 受取住所連絡画面</h2>
-<h3>商品「<?= $bidinfo->biditem->name ?>」</h3>
-<?= $this->Form->create('Bidinfo', ['type' => 'file']) ?>
+<h2><?= $authuser['username'] ?> の受取住所連絡画面</h2>
+<h3>商品名「<?= $bidinfo->biditem->name ?>」</h3>
+<?= $this->Form->create('Bidinfo', ['type' => 'post']) ?>
 <?php
 $name = $bidinfo->name;
 $address = $bidinfo->address;
@@ -40,7 +40,7 @@ $is_shipped = $bidinfo->is_shipped;
                 <legend>受取連絡：</legend>
                 <?php
                 echo '<p><strong>USER: ' . $authuser['username'] . '</strong></p>';
-                echo '<p>出品者が商品を発送しました</p>';
+                echo '<p>出品者が商品を発送しました。</p>';
                 echo $this->Form->label('is_received', '受取済');
                 echo $this->Form->checkbox('is_received');
                 ?>

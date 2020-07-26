@@ -54,10 +54,10 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Evaluation', [
-            'foreignKey' => 'receive_evaluation_user_id',
+            'foreignKey' => 'evaluation_user_id',
         ]);
         $this->hasMany('Evaluation', [
-            'foreignKey' => 'evaluation_user_id',
+            'foreignKey' => 'receive_evaluation_user_id',
         ]);
     }
 

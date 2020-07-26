@@ -1,6 +1,6 @@
 <h2><?= $authuser['username'] ?> の発送連絡画面</h2>
-<h3>商品「<?= $bidinfo->biditem->name ?>」</h3>
-<?= $this->Form->create('Bidinfo', ['type' => 'file']) ?>
+<h3>商品名「<?= $bidinfo->biditem->name ?>」</h3>
+<?= $this->Form->create('Bidinfo', ['type' => 'post']) ?>
 
 <?php
 $name = $bidinfo->name;
@@ -34,7 +34,7 @@ $is_shipped = $bidinfo->is_shipped;
     <fieldset>
         <legend>発送連絡：</legend>
         <?php
-        echo '<p><strong>USER: ' . $authuser['username'] . '</strong></p>';
+        echo '<p>商品の発送連絡をする。</p>';
         echo $this->Form->label('is_shipped', '発送済');
         echo $this->Form->checkbox('is_shipped');
         //var_dump($bidinfo);

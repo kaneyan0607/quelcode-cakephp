@@ -224,7 +224,7 @@ class AuctionController extends AuctionBaseController
                 // 成功時のメッセージ
                 $this->Flash->success(__('出品者に連絡しました。'));
                 // トップページ（home）に移動
-                //return $this->redirect(['action' => 'home']);
+                return $this->redirect(['action' => 'home']);
             } else {
                 // 失敗時のメッセージ
                 $this->Flash->error(__('出品者に連絡できませんでした。もう一度入力下さい。'));
@@ -252,7 +252,7 @@ class AuctionController extends AuctionBaseController
                 // 成功時のメッセージ
                 $this->Flash->success(__('発送連絡しました。'));
                 // トップページ（index）に移動
-                //return $this->redirect(['action' => 'home2']);
+                return $this->redirect(['action' => 'home2']);
             } else {
                 // 失敗時のメッセージ
                 $this->Flash->error(__('発送連絡に失敗しました。もう一度入力下さい。'));
@@ -326,5 +326,30 @@ class AuctionController extends AuctionBaseController
 
         //値を保管
         $this->set(compact(['evaluation', 'bidinfo']));
+    }
+
+    //取引評価の平均値とコメント
+    public function average($user_id = NULL)
+    {
+        //被評価ユーザーの情報を取得
+        $evaluations = $this->paginate('Evaluation', [
+            'conditions' => ['Evaluation.receive_evaluation_user_id' => $user_id],
+            'contain' => ['Users'],
+            'order' => ['created' => 'desc'],
+            'limit' => 10
+        ])->toArray();
+
+        $counter = 0;
+        foreach ($evaluations as $evaluation) {
+            $counter++;
+        }
+
+        //もしも評価実績がなければindexへ返す
+        if (empty($counter)) {
+            $this->Flash->error(__('評価実績がありません。'));
+            // トップページ（index）に移動
+            return $this->redirect(['action' => 'index']);
+        }
+        $this->set(compact('evaluations'));
     }
 }

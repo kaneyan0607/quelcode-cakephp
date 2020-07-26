@@ -44,11 +44,11 @@ class EvaluationTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'receive_evaluation_user_id',
+            'foreignKey' => 'evaluation_user_id',
             'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
-            'foreignKey' => 'evaluation_user_id',
+            'foreignKey' => 'receive_evaluation_user_id',
             'joinType' => 'INNER',
         ]);
         $this->belongsTo('Bidinfo', [
