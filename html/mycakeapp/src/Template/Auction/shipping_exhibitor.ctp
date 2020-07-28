@@ -1,4 +1,4 @@
-<h2><?= $authuser['username'] ?> の発送連絡画面</h2>
+<h2><?= h($authuser['username']) ?> の発送連絡画面</h2>
 <h3>商品名「<?= h($bidinfo->biditem->name) ?>」</h3>
 <?= $this->Form->create($bidinfo, ['type' => 'post']) ?>
 
