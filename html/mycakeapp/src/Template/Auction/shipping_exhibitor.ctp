@@ -62,11 +62,9 @@ $is_shipped = $bidinfo->is_shipped;
             echo  $this->Html->link(__(h($bidinfo->user->username) . 'さんを評価する。'), ['action' => 'evaluation_exhibitor', $bidinfo->id]);
         } elseif ($bidinfo['evaluation'][0]->evaluation_user_id === $authuser['id']) {
             echo '<p>評価済みです。</p>';
-            echo $this->Html->link(__('ホームに戻る'), ['action' => 'home2']);
         } elseif (!empty($bidinfo['evaluation'][1])) {
             if ($bidinfo['evaluation'][1]->evaluation_user_id === $authuser['id']) {
                 echo '<p>評価済みです。</p>';
-                echo $this->Html->link(__('ホームに戻る'), ['action' => 'home2']);
             }
         } else {
             echo '<p>取引が終了しました。落札者を評価して下さい。</p>';

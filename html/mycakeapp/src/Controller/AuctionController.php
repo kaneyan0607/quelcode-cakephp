@@ -214,7 +214,7 @@ class AuctionController extends AuctionBaseController
         $bidinfo = $this->Bidinfo->get($bidinfo_id, [
             'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
         ]);
-        //アクセス制限(落札者idと現在ログインしているユーザーidでアクセス可)
+        //アクセス制限(落札者idと現在ログインしているユーザーid一致でアクセス可)
         if ($bidinfo->user_id === $this->Auth->user('id')) {
             // POST送信時の処理
             if ($this->request->is('post')) {
@@ -246,7 +246,7 @@ class AuctionController extends AuctionBaseController
         $bidinfo = $this->Bidinfo->get($bidinfo_id, [
             'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
         ]);
-        //アクセス制限(出品者idと現在ログインしているユーザーidでアクセス可)
+        //アクセス制限(出品者idと現在ログインしているユーザーid一致でアクセス可)
         if ($bidinfo->biditem->user_id === $this->Auth->user('id')) {
             // POST送信時の処理
             if ($this->request->is('post')) {
@@ -280,7 +280,7 @@ class AuctionController extends AuctionBaseController
         $bidinfo = $this->Bidinfo->get($bidinfo_id, [
             'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
         ]);
-        //アクセス制限(落札者idと現在ログインしているユーザーidでアクセス可)
+        //アクセス制限(落札者idと現在ログインしているユーザーid一致でアクセス可)
         if ($bidinfo->user_id === $this->Auth->user('id')) {
             // POST送信時の処理
             if ($this->request->is('post')) {
@@ -317,7 +317,7 @@ class AuctionController extends AuctionBaseController
         $bidinfo = $this->Bidinfo->get($bidinfo_id, [
             'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
         ]);
-        //アクセス制限(出品者idと現在ログインしているユーザーidでアクセス可)
+        //アクセス制限(出品者idと現在ログインしているユーザーid一致でアクセス可)
         if ($bidinfo->biditem->user_id === $this->Auth->user('id')) {
             // POST送信時の処理
             if ($this->request->is('post')) {
