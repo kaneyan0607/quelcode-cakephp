@@ -1,7 +1,7 @@
 <h2><?= $authuser['username'] ?> 落札者への評価画面</h2>
-<h3>商品名「<?= $bidinfo->biditem->name ?>」</h3>
-<h4>落札者のアカウント名:「<?= $bidinfo->user->username ?>」</h4>
-<?= $this->Form->create('evaluation', ['type' => 'post']) ?>
+<h3>商品名「<?= h($bidinfo->biditem->name) ?>」</h3>
+<h4>落札者のアカウント名:「<?= h($bidinfo->user->username) ?>」</h4>
+<?= $this->Form->create($evaluation, ['type' => 'post']) ?>
 <fieldset>
     <legend>※落札者を評価する：</legend>
     <?php
@@ -16,7 +16,6 @@
         ),
         'empty' => '5段階で評価して下さい。'
     ));
-    //var_dump($bidinfo);
     ?>
 </fieldset>
 <?= $this->Form->button(__('Submit')) ?>

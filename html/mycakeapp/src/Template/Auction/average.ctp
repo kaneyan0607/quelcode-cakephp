@@ -1,4 +1,4 @@
-<h2><?= $evaluations[0]->user->username ?> の取引評価実績</h2>
+<h2><?= h($evaluations[0]->user->username) ?> の取引評価実績</h2>
 <fieldset>
     <legend>評価の平均値：</legend>
     <?php
@@ -6,12 +6,13 @@
     $average = 0; //評価の合計
     foreach ($evaluations as $evaluation) {
         $average += $evaluation->evaluation;
-
         $counter++;
     }
+    //割り算
     $average_evaluation = $average / $counter;
-    //少数第二位以下を切り捨てて表示
-    echo floor($average_evaluation * 10) / 10;
+    //少数第二位以下を切り捨て
+    $average_answer =  floor($average_evaluation * 10) / 10;
+    echo h($average_answer);
     ?>
 </fieldset>
 <table cellpadding="0" cellspacing="0">
@@ -40,3 +41,6 @@
         <?= $this->Paginator->last(__('last') . ' >>') ?>
     </ul>
 </div>
+
+<!-- 商品ページに戻る-->
+<?= $this->Html->link(__('<<商品詳細情報に戻る'), ['action' => 'view', $bidinfo_id]) ?>

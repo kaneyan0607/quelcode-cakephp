@@ -2,7 +2,7 @@
 	<table class="vertical-table">
 		<tr>
 			<th class="small" scope="row">出品者</th>
-			<td><?= $this->Html->link(__($biditem->has('user') ? $biditem->user->username : ''), ['action' => 'average', $biditem->user->id]) ?></td>
+			<td><?= $this->Html->link(__($biditem->has('user') ? h($biditem->user->username) : ''), ['action' => 'average', $biditem->user->id, $biditem->id]) ?></td>
 			<!-- ユーザーidを飛ばす。-->
 		</tr>
 		<tr>
@@ -87,7 +87,7 @@
 				</tr>
 				<tr>
 
-					<td><?= $this->Html->link(__($biditem->bidinfo->user->username), ['action' => 'average', $biditem->bidinfo->user->id]) ?></td>
+					<td><?= $this->Html->link(__(h($biditem->bidinfo->user->username)), ['action' => 'average', $biditem->bidinfo->user->id, $biditem->id]) ?></td>
 					<td><?= h($biditem->bidinfo->price) ?>円</td>
 					<td><?= h($biditem->endtime) ?></td>
 				</tr>
@@ -112,7 +112,7 @@
 					<tbody>
 						<?php foreach ($bidrequests as $bidrequest) : ?>
 							<tr>
-								<td><?= $this->Html->link(__($bidrequest->user->username), ['action' => 'average', $bidrequest->user->id]) ?></td>
+								<td><?= $this->Html->link(__(h($bidrequest->user->username)), ['action' => 'average', $bidrequest->user->id, $biditem->id]) ?></td>
 								<td><?= h($bidrequest->price) ?>円</td>
 								<td><?= $bidrequest->created ?></td>
 							</tr>

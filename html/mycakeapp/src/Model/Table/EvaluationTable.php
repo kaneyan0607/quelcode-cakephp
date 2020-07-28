@@ -76,8 +76,7 @@ class EvaluationTable extends Table
             ->notEmptyString('comment');
 
         $validator
-            //->boolean('evaluation')
-            //->requirePresence('evaluation', 'create')
+            ->integer('evaluation')
             ->notEmptyString('evaluation');
 
         return $validator;
@@ -92,10 +91,9 @@ class EvaluationTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        //$rules->add($rules->existsIn(['user_id'], 'Users'));
-        //$rules->add($rules->existsIn(['evaluation_user_id'], 'Users'));
-        //$rules->add($rules->existsIn(['bidinfo_id'], 'Bidinfo'));
-
+        $rules->add($rules->existsIn(['bidinfo_id'], 'Bidinfo'));
+        $rules->add($rules->existsIn(['evaluation_user_id'], 'Users'));
+        $rules->add($rules->existsIn(['receive_evaluation_user_id'], 'Users'));
         return $rules;
     }
 }

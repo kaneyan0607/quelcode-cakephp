@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class CreateBidinfo extends AbstractMigration
@@ -26,6 +27,29 @@ class CreateBidinfo extends AbstractMigration
         $table->addColumn('price', 'integer', [
             'default' => null,
             'limit' => 11,
+            'null' => false,
+        ]);
+        $table->addColumn('name', 'string', [
+            'default' => null,
+            'limit' => 100,
+            'null' => true,
+        ]);
+        $table->addColumn('address', 'string', [
+            'default' => null,
+            'limit' => 255,
+            'null' => true,
+        ]);
+        $table->addColumn('phone_number', 'string', [
+            'default' => null,
+            'limit' => 11,
+            'null' => true,
+        ]);
+        $table->addColumn('is_shipped', 'boolean', [
+            'default' => 0,
+            'null' => false,
+        ]);
+        $table->addColumn('is_received', 'boolean', [
+            'default' => 0,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [

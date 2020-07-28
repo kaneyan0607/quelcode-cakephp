@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class CreateEvaluation extends AbstractMigration
@@ -33,8 +34,9 @@ class CreateEvaluation extends AbstractMigration
             'limit' => 1000,
             'null' => false,
         ]);
-        $table->addColumn('evaluation', 'boolean', [
-            'default' => null,
+        $table->addColumn('evaluation', 'integer', [
+            'default' => 0,
+            'limit' => 1,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [

@@ -224,14 +224,13 @@ class AuctionController extends AuctionBaseController
                 // 成功時のメッセージ
                 $this->Flash->success(__('出品者に連絡しました。'));
                 // トップページ（home）に移動
-                return $this->redirect(['action' => 'home']);
+                //return $this->redirect(['action' => 'home']);
             } else {
                 // 失敗時のメッセージ
                 $this->Flash->error(__('出品者に連絡できませんでした。もう一度入力下さい。'));
                 //var_dump($bidinfo);
             }
         }
-
         //値を保管
         $this->set(compact(['bidinfo']));
     }
@@ -247,12 +246,12 @@ class AuctionController extends AuctionBaseController
             $data = $this->request->getData();
             // $bidinfoにフォームの送信内容を反映
             $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $data);
-            // $bidinfoを保存する
+
             if ($this->Bidinfo->save($bidinfo)) {
                 // 成功時のメッセージ
-                $this->Flash->success(__('発送連絡しました。'));
+                $this->Flash->success(__('落札者に発送連絡しました。'));
                 // トップページ（index）に移動
-                return $this->redirect(['action' => 'home2']);
+                //return $this->redirect(['action' => 'home2']);
             } else {
                 // 失敗時のメッセージ
                 $this->Flash->error(__('発送連絡に失敗しました。もう一度入力下さい。'));
@@ -329,7 +328,7 @@ class AuctionController extends AuctionBaseController
     }
 
     //取引評価の平均値とコメント
-    public function average($user_id = NULL)
+    public function average($user_id = NULL, $bidinfo_id = NULL)
     {
         //被評価ユーザーの情報を取得
         $evaluations = $this->paginate('Evaluation', [
@@ -347,9 +346,9 @@ class AuctionController extends AuctionBaseController
         //もしも評価実績がなければindexへ返す
         if (empty($counter)) {
             $this->Flash->error(__('評価実績がありません。'));
-            // トップページ（index）に移動
-            return $this->redirect(['action' => 'index']);
+            // 元のページに移動
+            $this->redirect($this->request->referer());
         }
-        $this->set(compact('evaluations'));
+        $this->set(compact('evaluations', 'bidinfo_id'));
     }
 }
