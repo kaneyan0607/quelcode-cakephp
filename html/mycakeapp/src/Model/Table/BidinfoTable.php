@@ -84,7 +84,7 @@ class BidinfoTable extends Table
             ->notEmptyString('name');
 
         $validator
-            ->email('address', false, 'メールアドレスを入力してください')
+            ->scalar('address')
             ->maxLength('address', 255)
             ->requirePresence('address', 'create')
             ->notEmptyString('address');

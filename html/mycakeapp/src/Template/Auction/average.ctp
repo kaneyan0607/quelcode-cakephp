@@ -12,7 +12,7 @@
     $average_evaluation = $average / $counter;
     //少数第二位以下を切り捨て
     $average_answer =  floor($average_evaluation * 10) / 10;
-    echo h($average_answer);
+    echo number_format($average_answer, 1);
     ?>
 </fieldset>
 <table cellpadding="0" cellspacing="0">
