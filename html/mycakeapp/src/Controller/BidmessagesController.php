@@ -11,7 +11,7 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Bidmessage[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class BidmessagesController extends AppController
+class BidmessagesController extends AuctionBaseController
 {
     /**
      * Index method

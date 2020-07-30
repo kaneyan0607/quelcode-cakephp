@@ -2,7 +2,7 @@
 
 use Migrations\AbstractMigration;
 
-class CreateBidinfo extends AbstractMigration
+class CreateEvaluation extends AbstractMigration
 {
     /**
      * Change Method.
@@ -13,43 +13,30 @@ class CreateBidinfo extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('bidinfo');
-        $table->addColumn('biditem_id', 'integer', [
+        $table = $this->table('evaluation');
+        $table->addColumn('receive_evaluation_user_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('user_id', 'integer', [
+        $table->addColumn('evaluation_user_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('price', 'integer', [
+        $table->addColumn('bidinfo_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('name', 'string', [
+        $table->addColumn('comment', 'string', [
             'default' => null,
-            'limit' => 100,
-            'null' => true,
+            'limit' => 1000,
+            'null' => false,
         ]);
-        $table->addColumn('address', 'string', [
-            'default' => null,
-            'limit' => 255,
-            'null' => true,
-        ]);
-        $table->addColumn('phone_number', 'string', [
-            'default' => null,
-            'limit' => 11,
-            'null' => true,
-        ]);
-        $table->addColumn('is_shipped', 'boolean', [
+        $table->addColumn('evaluation', 'integer', [
             'default' => 0,
-            'null' => false,
-        ]);
-        $table->addColumn('is_received', 'boolean', [
-            'default' => 0,
+            'limit' => 1,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [

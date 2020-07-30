@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -13,6 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\BiditemsTable&\Cake\ORM\Association\HasMany $Biditems
  * @property \App\Model\Table\BidmessagesTable&\Cake\ORM\Association\HasMany $Bidmessages
  * @property \App\Model\Table\BidrequestsTable&\Cake\ORM\Association\HasMany $Bidrequests
+ * @property \App\Model\Table\EvaluationTable&\Cake\ORM\Association\HasMany $Evaluation
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -50,6 +52,12 @@ class UsersTable extends Table
         ]);
         $this->hasMany('Bidrequests', [
             'foreignKey' => 'user_id',
+        ]);
+        $this->hasMany('Evaluation', [
+            'foreignKey' => 'evaluation_user_id',
+        ]);
+        $this->hasMany('Evaluation', [
+            'foreignKey' => 'receive_evaluation_user_id',
         ]);
     }
 

@@ -23,6 +23,7 @@ class AuctionController extends AuctionBaseController
         $this->loadModel('Bidrequests');
         $this->loadModel('Bidinfo');
         $this->loadModel('Bidmessages');
+        $this->loadModel('Evaluation');
         // ログインしているユーザー情報をauthuserに設定
         $this->set('authuser', $this->Auth->user());
         // レイアウトをauctionに変更
@@ -204,5 +205,168 @@ class AuctionController extends AuctionBaseController
             'limit' => 10
         ])->toArray();
         $this->set(compact('biditems'));
+    }
+
+    //落札者の取引後終了後ページ
+    public function shippingBuyer($bidinfo_id = null)
+    {
+
+        $bidinfo = $this->Bidinfo->get($bidinfo_id, [
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
+        ]);
+        //アクセス制限(落札者idと現在ログインしているユーザーid一致でアクセス可)
+        if ($bidinfo->user_id === $this->Auth->user('id')) {
+            // POST送信時の処理
+            if ($this->request->is('post')) {
+                $data = $this->request->getData();
+                // $bidinfoにフォームの送信内容を反映
+                $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $data);
+                // $bidinfoを保存する
+                if ($this->Bidinfo->save($bidinfo)) {
+                    // 成功時のメッセージ
+                    $this->Flash->success(__('出品者に連絡しました。'));
+                } else {
+                    // 失敗時のメッセージ
+                    $this->Flash->error(__('出品者に連絡できませんでした。もう一度入力下さい。'));
+                }
+            }
+        } else {
+            // 落札者以外のアクセスがあった場合のメッセージ
+            $this->Flash->error(__('アクセスできるのは落札者のみです。'));
+            // トップページ（home）に移動
+            return $this->redirect(['action' => 'home']);
+        }
+        //値を保管
+        $this->set(compact(['bidinfo']));
+    }
+
+    //出品者の取引終了後ページ
+    public function shippingExhibitor($bidinfo_id = null)
+    {
+        $bidinfo = $this->Bidinfo->get($bidinfo_id, [
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
+        ]);
+        //アクセス制限(出品者idと現在ログインしているユーザーid一致でアクセス可)
+        if ($bidinfo->biditem->user_id === $this->Auth->user('id')) {
+            // POST送信時の処理
+            if ($this->request->is('post')) {
+                $data = $this->request->getData();
+                // $bidinfoにフォームの送信内容を反映
+                $bidinfo = $this->Bidinfo->patchEntity($bidinfo, $data);
+
+                if ($this->Bidinfo->save($bidinfo)) {
+                    // 成功時のメッセージ
+                    $this->Flash->success(__('落札者に発送連絡しました。'));
+                } else {
+                    // 失敗時のメッセージ
+                    $this->Flash->error(__('発送連絡に失敗しました。もう一度入力下さい。'));
+                }
+            }
+        } else {
+            // 落札者以外のアクセスがあった場合のメッセージ
+            $this->Flash->error(__('アクセスできるのは出品者のみです。'));
+            // トップページ（home）に移動
+            return $this->redirect(['action' => 'home2']);
+        }
+        //値を保管
+        $this->set(compact(['bidinfo']));
+    }
+
+    //落札者の取引評価
+    public function evaluationBuyer($bidinfo_id = null)
+    {
+        // 取引評価のevaluationインスタンスを用意
+        $evaluation = $this->Evaluation->newEntity();
+        $bidinfo = $this->Bidinfo->get($bidinfo_id, [
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
+        ]);
+        //アクセス制限(落札者idと現在ログインしているユーザーid一致でアクセス可)
+        if ($bidinfo->user_id === $this->Auth->user('id')) {
+            // POST送信時の処理
+            if ($this->request->is('post')) {
+                $data = $this->request->getData();
+                // $evaluationにフォームの送信内容を反映
+                $evaluation = $this->Evaluation->patchEntity($evaluation, $data);
+                // $evaluationを保存する
+                if ($this->Evaluation->save($evaluation)) {
+                    // 成功時のメッセージ
+                    $this->Flash->success(__('出品者を評価しました。'));
+                    // トップページ（index）に移動
+                    return $this->redirect(['action' => 'home']);
+                } else {
+                    // 失敗時のメッセージ
+                    $this->Flash->error(__('コメントと5段階評価を入力下さい。'));
+                }
+            }
+        } else {
+            // 落札者以外のアクセスがあった場合のメッセージ
+            $this->Flash->error(__('アクセスできるのは落札者のみです。'));
+            // トップページ（home）に移動
+            return $this->redirect(['action' => 'home']);
+        }
+
+        //値を保管
+        $this->set(compact(['evaluation', 'bidinfo']));
+    }
+
+    //出品者の取引評価
+    public function evaluationExhibitor($bidinfo_id = NULL)
+    {
+        // 取引評価のevaluationインスタンスを用意
+        $evaluation = $this->Evaluation->newEntity();
+        $bidinfo = $this->Bidinfo->get($bidinfo_id, [
+            'contain' => ['Biditems', 'Users', 'Evaluation', 'Biditems.Users']
+        ]);
+        //アクセス制限(出品者idと現在ログインしているユーザーid一致でアクセス可)
+        if ($bidinfo->biditem->user_id === $this->Auth->user('id')) {
+            // POST送信時の処理
+            if ($this->request->is('post')) {
+                $data = $this->request->getData();
+                // $evaluationにフォームの送信内容を反映
+                $evaluation = $this->Evaluation->patchEntity($evaluation, $data);
+                // $evaluationを保存する
+                if ($this->Evaluation->save($evaluation)) {
+                    // 成功時のメッセージ
+                    $this->Flash->success(__('落札者を評価しました。'));
+                    // トップページ（index）に移動
+                    return $this->redirect(['action' => 'home2']);
+                } else {
+                    // 失敗時のメッセージ
+                    $this->Flash->error(__('コメントと5段階評価を入力下さい。'));
+                }
+            }
+        } else {
+            // 落札者以外のアクセスがあった場合のメッセージ
+            $this->Flash->error(__('アクセスできるのは出品者のみです。'));
+            // トップページ（home）に移動
+            return $this->redirect(['action' => 'home2']);
+        }
+
+        //値を保管
+        $this->set(compact(['evaluation', 'bidinfo']));
+    }
+
+    //取引評価の平均値とコメント
+    public function average($user_id = NULL, $bidinfo_id = NULL)
+    {
+        //被評価ユーザーの情報を取得
+        $evaluations = $this->paginate('Evaluation', [
+            'conditions' => ['Evaluation.receive_evaluation_user_id' => $user_id],
+            'contain' => ['Users'],
+            'order' => ['created' => 'desc'],
+            'limit' => 10
+        ])->toArray();
+        //評価された数をカウント
+        $counter = 0;
+        foreach ($evaluations as $evaluation) {
+            $counter++;
+        }
+        //もしも評価実績がなければindexへ返す
+        if (empty($counter)) {
+            $this->Flash->error(__('評価実績がありません。'));
+            // 商品ページに戻る
+            return $this->redirect(['action' => 'view', $bidinfo_id]);
+        }
+        $this->set(compact('evaluations', 'bidinfo_id'));
     }
 }
