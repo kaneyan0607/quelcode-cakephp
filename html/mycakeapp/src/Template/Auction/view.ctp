@@ -99,7 +99,11 @@
 	<div class="related">
 		<h4><?= __('入札情報') ?></h4>
 		<?php if (!$biditem->finished) : ?>
-			<h6><a href="<?= $this->Url->build(['action' => 'bid', $biditem->id]) ?>">《入札する！》</a></h6>
+			<?php if (($biditem->user_id) === ($authuser['id'])) : ?>
+				<h6 style="color:#FF0000">ご自身で出品した商品の為、入札できません。</h6>
+			<?php else : ?>
+				<h6><a href="<?= $this->Url->build(['action' => 'bid', $biditem->id]) ?>">《入札する！》</a></h6>
+			<?php endif; ?>
 			<?php if (!empty($bidrequests)) : ?>
 				<table cellpadding="0" cellspacing="0">
 					<thead>

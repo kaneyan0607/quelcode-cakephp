@@ -132,22 +132,28 @@ class AuctionController extends AuctionBaseController
         // $bidrequestにbiditem_idとuser_idを設定
         $bidrequest->biditem_id = $biditem_id;
         $bidrequest->user_id = $this->Auth->user('id');
-        // POST送信時の処理
-        if ($this->request->is('post')) {
-            // $bidrequestに送信フォームの内容を反映する
-            $bidrequest = $this->Bidrequests->patchEntity($bidrequest, $this->request->getData());
-            // Bidrequestを保存
-            if ($this->Bidrequests->save($bidrequest)) {
-                // 成功時のメッセージ
-                $this->Flash->success(__('入札を送信しました。'));
-                // トップページにリダイレクト
-                return $this->redirect(['action' => 'view', $biditem_id]);
-            }
-            // 失敗時のメッセージ
-            $this->Flash->error(__('入札に失敗しました。もう一度入力下さい。'));
-        }
         // $biditem_idの$biditemを取得する
         $biditem = $this->Biditems->get($biditem_id);
+        //アクセス制限(出品者idと現在ログインしているユーザーid一致でアクセス可)
+        if ($biditem->user_id === $this->Auth->user('id')) {
+            $this->Flash->error(__('ご自身で出品した商品の為、入札できません。'));
+            return $this->redirect(['action' => 'view', $biditem_id]);
+        } else {
+            // POST送信時の処理
+            if ($this->request->is('post')) {
+                // $bidrequestに送信フォームの内容を反映する
+                $bidrequest = $this->Bidrequests->patchEntity($bidrequest, $this->request->getData());
+                // Bidrequestを保存
+                if ($this->Bidrequests->save($bidrequest)) {
+                    // 成功時のメッセージ
+                    $this->Flash->success(__('入札を送信しました。'));
+                    // トップページにリダイレクト
+                    return $this->redirect(['action' => 'view', $biditem_id]);
+                }
+                // 失敗時のメッセージ
+                $this->Flash->error(__('入札に失敗しました。もう一度入力下さい。'));
+            }
+        }
         $this->set(compact('bidrequest', 'biditem'));
     }
 
