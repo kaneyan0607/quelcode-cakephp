@@ -177,7 +177,7 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
         'exceptionRenderer' => ExceptionRenderer::class,
         'skipLog' => [],
         'log' => true,
@@ -256,15 +256,15 @@ return [
             'className' => Connection::class,
             'driver' => Mysql::class,
             'persistent' => false,
-            'host' => 'mysql',
+            'host' => 'localhost',
             /*
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'docker_db_user',
-            'password' => 'docker_db_user_pass',
+            'username' => 'root',
+            'password' => 'Mk2856686',
             'database' => 'docker_db',
             /*
              * You do not need to set this flag to use full utf-8 encoding (internal default since CakePHP 3.6).
