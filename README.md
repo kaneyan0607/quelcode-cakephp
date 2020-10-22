@@ -1,6 +1,29 @@
 # docker-mycakeapp2
 
-- CakePHP 超入門のオークションアプリの docker 環境
+- CakePHP オークションアプリの docker 環境
+
+下記のようにブランチを切ってます
+##### feature/cakephp-challenge1
+- 出品画面と商品詳細情報欄にフォームを追加。
+- 出品画面に画像のアップローダーを設け、商品詳細欄にはアップロードされた画像が見られるような状態に機能を追加
+- JavaScriptを使って、商品詳細画面欄にリアルタイムで終了時刻までカウントダウンを行う、カウントダウンタイマーを実装。
+
+設計書は下記となります。
+https://docs.google.com/document/d/13-AC0n_n-xDjjLfWTx0woIhWo5VIGlZnhX3D2-YEzIg/edit
+
+##### feature/cakephp-challenge2
+- 取引終了後のページを作成（出品者と落札者しかアクセス不可）
+- 取引終了後のページで、発送先（名前・住所・電話番号）のやり取りや、発送連絡、受取連絡を行えるようにする
+- 取引終了時（受取連絡終了時）にしか入力できない、出品者と落札者の評価（数字で１（低）〜５（高）までの数値評価とコメント）入力フォーム（バリデーションを作成すること）
+- 相手から入力されたレーティング（数字の平均値）と、評価コメントは各ユーザーのページから確認出来るようにすること。
+
+※ 自分で出品し、自分で落札した商品は、出品者、落札者から見てどちらか１度のみ評価できるものにしています。(自分で自分を評価するため出品者としても落札者としても評価を満たした。ということにしています）
+
+詳細設計書
+https://docs.google.com/document/d/1kO61VYs94Z7cR7e_rzLfz9oGArJyYS0Rt2axR08Jtms/edit
+
+DB定義書
+https://docs.google.com/spreadsheets/d/16u4B01yfGZEPAjGYBrz6RK4_Pykj_otzI7gT7mD4Oes/edit#gid=0
 
 ## docker 起動前の準備
 
