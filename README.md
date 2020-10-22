@@ -3,7 +3,7 @@
 - CakePHP オークションアプリの docker 環境
 
 下記のようにブランチを切ってます
-##### feature/cakephp-challenge1
+### feature/cakephp-challenge1
 - 出品画面と商品詳細情報欄にフォームを追加。
 - 出品画面に画像のアップローダーを設け、商品詳細欄にはアップロードされた画像が見られるような状態に機能を追加
 - JavaScriptを使って、商品詳細画面欄にリアルタイムで終了時刻までカウントダウンを行う、カウントダウンタイマーを実装。
@@ -11,7 +11,7 @@
 設計書は下記となります。
 https://docs.google.com/document/d/13-AC0n_n-xDjjLfWTx0woIhWo5VIGlZnhX3D2-YEzIg/edit
 
-##### feature/cakephp-challenge2
+### feature/cakephp-challenge2
 - 取引終了後のページを作成（出品者と落札者しかアクセス不可）
 - 取引終了後のページで、発送先（名前・住所・電話番号）のやり取りや、発送連絡、受取連絡を行えるようにする
 - 取引終了時（受取連絡終了時）にしか入力できない、出品者と落札者の評価（数字で１（低）〜５（高）までの数値評価とコメント）入力フォーム（バリデーションを作成すること）
