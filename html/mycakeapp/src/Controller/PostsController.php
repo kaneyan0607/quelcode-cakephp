@@ -4,15 +4,19 @@ namespace App\Controller;
 
 class PostsController extends AppController
 {
-    public $autoRender = false;
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->viewBuilder()->setLayout('test');
+    }
 
     public function index()
     {
-        echo "Posts Index";
     }
 
     public function view($id = null)
     {
-        echo "ID:" . $id . "Posts View";
+
+        $this->set(compact('id'));
     }
 }
