@@ -1,2 +1,11 @@
-<h1>view.php</h1>
-<p>ID: <?= $id ?></p>
+<?php
+
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Post $posts
+ * 
+ */
+?>
+
+<h1><?= $post->title ?></h1>
+<p><?= $post->body ?></p>
