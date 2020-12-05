@@ -4,15 +4,16 @@ namespace App\Controller;
 
 class PostsController extends AppController
 {
-    // public function initialize(): void
-    // {
-    //     parent::initialize();
-    //     $this->viewBuilder()->setLayout('test');
-    // }
+    public $paginate = [
+        'limit' => 2,
+        'order' => [
+            'created' => 'desc'
+        ]
+    ];
 
     public function index()
     {
-        $posts = $this->Posts->find();
+        $posts = $this->paginate($this->Posts->find());
         $this->set(compact('posts'));
     }
 
