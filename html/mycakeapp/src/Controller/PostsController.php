@@ -12,8 +12,7 @@ class PostsController extends AppController
 
     public function index()
     {
-        $posts = $this->Posts->find('all');
-
+        $posts = $this->Posts->find();
         $this->set(compact('posts'));
     }
 
